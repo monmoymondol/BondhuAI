@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import ChatMessage from './components/ChatMessage';
 import ChatInput from './components/ChatInput';
 import SuggestionChips from './components/SuggestionChips';
+import InstallPwaModal from './components/InstallPwaModal';
 import { sendMessageToBondhuAI } from './services/geminiService';
 import { Message } from './types';
 
@@ -26,6 +27,7 @@ const BondhuAILogo = ({ className }: { className?: string }) => (
 function App() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [showInstallModal, setShowInstallModal] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -64,10 +66,21 @@ function App() {
   };
 
   return (
+    <>
     <div className="flex flex-col h-screen font-sans">
       <header className="bg-slate-100/80 backdrop-blur-md sticky top-0 z-10 border-b border-gray-200/80">
           <div className="max-w-3xl mx-auto py-3 px-6 flex items-center justify-between">
               <BondhuAILogo className="animate-bounce-in" />
+              <button 
+                onClick={() => setShowInstallModal(true)}
+                className="bg-white/60 backdrop-blur-sm text-sm text-teal-800 font-medium py-2 px-4 rounded-full border border-teal-200/60 shadow-lg hover:bg-white hover:border-teal-300 hover:scale-105 transform transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 flex items-center gap-2"
+                aria-label="Install App"
+                >
+                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                 </svg>
+                <span>Install App</span>
+              </button>
           </div>
       </header>
 
@@ -112,6 +125,8 @@ function App() {
         <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} />
       </div>
     </div>
+    {showInstallModal && <InstallPwaModal onClose={() => setShowInstallModal(false)} />}
+    </>
   );
 }
 

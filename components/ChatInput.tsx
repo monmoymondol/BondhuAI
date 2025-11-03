@@ -25,7 +25,11 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isLoading }) => {
           onChange={(e) => setInput(e.target.value)}
           placeholder="BondhuAI er sathe kotha bolun..."
           disabled={isLoading}
-          className="w-full px-5 py-3 border-0 bg-white rounded-full focus:outline-none focus:ring-4 focus:ring-teal-400/50 transition-shadow duration-300 shadow-md"
+          className={`w-full px-5 py-3 border-0 rounded-full focus:outline-none focus:ring-4 focus:ring-teal-400/50 transition-all duration-300 shadow-md ${
+            input.trim()
+              ? 'bg-gradient-to-r from-teal-50 to-cyan-50'
+              : 'bg-white'
+          }`}
           aria-label="Chat input"
         />
         <button
